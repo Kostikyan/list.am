@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Item Data</title>
+</head>
+<body>
+<a href="/items">Back</a> <br>
+<b>ID: </b><span th:text="${item.getId()}"></span> <br>
+<b>TITLE: </b><span th:text="${item.getTitle()}"></span> <br>
+<b>DESCRIPTION: </b><span th:text="${item.getDescription()}"></span> <br>
+<b>CATEGORY: </b><span th:if="${item.category != null}" th:text="${item.getCategory().getName()}"></span> <br>
+
+<br>
+
+<form action="/addComment" method="post">
+    <label>Add Comment: </label><input type="text" name="comment">
+    <input type="hidden" name="itemId" th:value="${item.getId()}">
+    <input type="submit" value="Add">
+</form>
+
+<h1>Comments: </h1> <br>
+<div th:each="comment : ${comments}" style="
+     width: 100%;
+     height: auto;
+     border: 1px dotted lightpink;
+     padding-left: 15px;
+">
+    <h3 th:text="${comment.getComment()}"></h3>
+    <a th:href="@{/removeComment(comId=${comment.getId()})}">DELETE</a>
+</div>
+</body>
+</html>
